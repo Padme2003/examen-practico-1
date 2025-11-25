@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  pilataxi-app:
+    image: ghcr.io/padme2003/pilataxi:1.0.5
+    networks:
+      - traefik-public
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.pilataxi.rule=Host(`pilataxi.byronrm.com`)"
+        - "traefik.http.routers.pilataxi.entrypoints=websecure"
+        - "traefik.http.routers.pilataxi.tls.certresolver=letsencrypt"
+        - "traefik.http.services.pilataxi.loadbalancer.server.port=5000"
+
+networks:
+  traefik-public:
+    external: true
